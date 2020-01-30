@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Learning Android</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="hint_number">Input number</string>
+    <string name="api_key">AIzaSyDKzudIWJia74YeGe4Wzl38tTf-zpTLWtE</string>
+</resources>

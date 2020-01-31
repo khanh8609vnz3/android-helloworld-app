@@ -2,8 +2,10 @@ package com.example.helloworld;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +14,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.helloworld.models.Student;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Integer.parseInt;
@@ -35,6 +40,29 @@ public class AnimalRaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_race);
+
+        // Get value from learningJava activity
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        Toast.makeText(this, "User name: " + name, Toast.LENGTH_SHORT).show();
+
+        ArrayList<String> stringList = intent.getStringArrayListExtra("stringList");
+        for (int i = 0; i < stringList.size(); i++) {
+            Log.d("stringList", stringList.get(i));
+        }
+
+        Student student = (Student) intent.getSerializableExtra("student");
+        Log.d("student", "Name: " + student.getName() + ",age: " + student.getAge());
+
+        // Get value from bundle
+        Bundle bundle = intent.getBundleExtra("bundle");
+        Log.d("bundle", "Bundle. String: " + bundle.getString("name") + ", number: " + bundle.getInt("number"));
+        ArrayList<String> bundleStringList = bundle.getStringArrayList("stringList");
+        for (int i = 0; i < stringList.size(); i++) {
+            Log.d("bundle", stringList.get(i));
+        }
+        Student bundleStudent = (Student) bundle.getSerializable("student");
+        Log.d("bundle", "Name: " + bundleStudent.getName() + ",age: " + bundleStudent.getAge());
 
         initVar();
         playFunction();
@@ -174,14 +202,14 @@ public class AnimalRaceActivity extends AppCompatActivity {
         }
     }
 
-    private void disableButton(){
+    private void disableButton() {
         cbA.setEnabled(false);
         cbB.setEnabled(false);
         cbC.setEnabled(false);
         btnPlay.setEnabled(false);
     }
 
-    private void enableButton(){
+    private void enableButton() {
         cbA.setEnabled(true);
         cbB.setEnabled(true);
         cbC.setEnabled(true);

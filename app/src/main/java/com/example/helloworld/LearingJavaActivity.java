@@ -32,10 +32,12 @@ import com.example.helloworld.api.ApiClient;
 import com.example.helloworld.api.StudentApi;
 import com.example.helloworld.models.Student;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -309,24 +311,47 @@ public class LearingJavaActivity extends AppCompatActivity {
         btnPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent k = new Intent(LearingJavaActivity.this, AnimalRaceActivity.class);
-                startActivity(k);
+                Intent intent = new Intent(LearingJavaActivity.this, AnimalRaceActivity.class);
+
+                // Add parameter to race activity
+                intent.putExtra("name", edtName.getText().toString());
+                intent.putExtra("number", 10);
+
+                ArrayList<String> stringList;
+                stringList = new ArrayList<>();
+                for (int i = 1; i < 10; i++) {
+                    stringList.add("Name " + i);
+                }
+                intent.putExtra("stringList", stringList);
+
+                Student student = new Student("Khanh", 25);
+                intent.putExtra("student", student);
+
+                // Pass bundle parameter
+                Bundle bundle = new Bundle();
+                bundle.putString("name", edtName.getText().toString());
+                bundle.putInt("number", 10);
+                bundle.putStringArrayList("stringList", stringList);
+                bundle.putSerializable("student", student);
+                intent.putExtra("bundle", bundle);
+
+                startActivity(intent);
             }
         });
 
         btnListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent k = new Intent(LearingJavaActivity.this, ListViewActivity.class);
-                startActivity(k);
+                Intent intent = new Intent(LearingJavaActivity.this, ListViewActivity.class);
+                startActivity(intent);
             }
         });
 
         btnGridView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent k = new Intent(LearingJavaActivity.this, GridViewActivity.class);
-                startActivity(k);
+                Intent intent = new Intent(LearingJavaActivity.this, GridViewActivity.class);
+                startActivity(intent);
             }
         });
 

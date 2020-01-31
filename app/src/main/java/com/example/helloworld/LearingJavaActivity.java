@@ -3,6 +3,7 @@ package com.example.helloworld;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -75,6 +77,8 @@ public class LearingJavaActivity extends AppCompatActivity {
 
     EditText edtDate;
 
+    TextView txtTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +127,9 @@ public class LearingJavaActivity extends AppCompatActivity {
 
         // Datetimepicker dialog
         edtDate = findViewById(R.id.editTextDate);
+
+        // Timepicker dialog
+        txtTime = findViewById(R.id.textViewTime);
     }
 
     private void learningJava() {
@@ -345,6 +352,14 @@ public class LearingJavaActivity extends AppCompatActivity {
             }
         });
 
+        // Show timepicker dialog
+        txtTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime();
+            }
+        });
+
     }
 
     private void callApiVolley() {
@@ -405,5 +420,22 @@ public class LearingJavaActivity extends AppCompatActivity {
             }
         }, year, month, date);
         datePickerDialog.show();
+    }
+
+    private void selectTime() {
+
+        final Calendar time = Calendar.getInstance();
+        int hour = time.get(Calendar.HOUR_OF_DAY);
+        int minute = time.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+                time.set(0, 0, 0, hourOfDay, minute);
+                txtTime.setText(simpleDateFormat.format(time.getTime()));
+            }
+        }, hour, minute, false);
+        timePickerDialog.show();
     }
 }
